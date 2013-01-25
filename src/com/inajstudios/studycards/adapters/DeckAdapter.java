@@ -60,7 +60,7 @@ public class DeckAdapter extends BaseAdapter {
 		tvTitle.setText(deck.getTitle());
 		tvDescription.setText("Description: " + deck.getDescription());
 		tvCategory.setText(deck.getCategory());
-		tvIsPrivate.setText(deck.getIsPrivate() + " lol");
+		tvIsPrivate.setText("DID" + deck.getDid());
 
 		return v;
 	}

@@ -13,5 +13,9 @@
         android:id="@+id/menu_settings"
         android:name="Settings"
         android:title="Settings"/>
+    <item
+        android:id="@+id/menu_swipe"
+        android:name="Swipe"
+        android:title="Swipe"/>
 
 </menu>

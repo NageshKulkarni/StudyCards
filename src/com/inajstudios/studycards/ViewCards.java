@@ -1,14 +1,16 @@
 package com.inajstudios.studycards;
 
-import android.app.Activity;
+import android.content.res.Configuration;
+import android.gesture.GestureOverlayView;
+import android.gesture.GestureOverlayView.OnGestureListener;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.MotionEvent;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.inajstudios.studycards.R;
 
-public class ViewCards extends SherlockActivity {
+public class ViewCards extends SherlockActivity implements OnGestureListener{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +37,38 @@ public class ViewCards extends SherlockActivity {
 	    int itemId = item.getItemId();
 	    switch (itemId) {
 	    case android.R.id.home:
-	        //toggle();
-
 	        finish();
 	        break;
-
 	    }
-
 	    return true;
+	}
+
+	
+	/*
+	 * Swiping gestures to do stuff!
+	 */
+	@Override
+	public void onGesture(GestureOverlayView overlay, MotionEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

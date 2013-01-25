@@ -30,6 +30,14 @@
             android:name=".DbDebug"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".NewDeck"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".SwipeExample"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

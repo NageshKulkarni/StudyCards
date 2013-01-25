@@ -5,4 +5,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
 
+    <array name="deck_long_click">
+        <item name="Edit">Edit Deck</item>
+        <item name="Delete">Delete Deck</item>
+        <item name="Delete">Cancel</item>
+    </array>
+
 </resources>

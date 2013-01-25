@@ -49,7 +49,21 @@ public class DeckDataSource {
 			Log.e(LOG, "Error creating new deck");
 		}
 
-		Log.w(LOG, "Added DID:" + insertID + " Title:" + deck.getTitle());
+		Log.w(LOG, "Added DID:" + deck.getDid() + " Title:" + deck.getTitle());
+	}
+
+	/*
+	 * Creates a new deck and inserts it into the DB
+	 */
+	public void DeleteDeck(Deck deck) {
+		// Preparing data to insert
+		long deleteID = db.delete(MySQLiteHelper.TABLE_DECKS, MySQLiteHelper.DECKS_COLUMN_DID + " = " + deck.getDid(), null);
+
+		if (deleteID == -1) {
+			Log.e(LOG, "Error creating new deck");
+		}
+
+		Log.w(LOG, "Deleted DID:" + deck.getDid() + " Title:" + deck.getTitle());
 	}
 
 	/*
