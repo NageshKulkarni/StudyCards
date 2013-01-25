@@ -27,6 +27,7 @@ import com.inajstudios.studycards.sqlite.DeckDataSource;
 
 public class MainActivity extends SherlockActivity implements OnItemLongClickListener {
 
+	private static final String LOG = "MainActivity";
 	private DeckDataSource db;
 	List<Deck> decks;
 
@@ -176,22 +177,22 @@ public class MainActivity extends SherlockActivity implements OnItemLongClickLis
 						switch (which)
 						{
 						case 0:
-							Log.w("StudyCards","You've hit edit!");
+							Log.w(LOG,"You've hit edit!");
 							break;
 						case 1:
-							Log.w("StudyCards","You've hit delete!");
+							Log.w(LOG,"You've hit delete!");
 							db.open();
 							db.DeleteDeck(deck);
 							db.close();
 							updateList();
 							break;
 						case 2:
-							Log.w("StudyCards","You've hit cancel!");
+							Log.w(LOG,"You've hit cancel!");
 							dialog.cancel();
 							break;
 							
 						}
-						Log.w("StudyCards", "which: " + which + " | " + "dialog: " + dialog.toString());
+						Log.w(LOG, "which: " + which + " | " + "dialog: " + dialog.toString());
 					}
 				});
 		AlertDialog d = builder.create();
