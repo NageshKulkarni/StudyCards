@@ -20,8 +20,7 @@ import com.inajstudios.studycards.adapters.DeckAdapter;
 import com.inajstudios.studycards.models.Deck;
 import com.inajstudios.studycards.sqlite.DeckDataSource;
 
-public class DeckListFragment extends SherlockFragment implements OnItemLongClickListener
-{
+public class DeckListFragment extends SherlockFragment implements OnItemLongClickListener {
 	private static final String LOG = "DeckListFragment";
 	private DeckDataSource db;
 	List<Deck> decks;
@@ -30,57 +29,61 @@ public class DeckListFragment extends SherlockFragment implements OnItemLongClic
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_decklist, container, false);
-		
+
 		db = new DeckDataSource(getActivity());
 		List<Deck> decks = new ArrayList<Deck>();
 		lvDecks = (ListView) getView().findViewById(R.id.fragment_lvDecks);
-		
+		updateList();
 		return view;
+	}
+	
+	@Override
+	public void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+
+		updateList();
 	}
 
 	@Override
-	public boolean onItemLongClick(AdapterView<?> parent, View view, int position,
-			long id) {
+	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 		// Find out which deck was long clicked
 		final Deck deck = (Deck) parent.getItemAtPosition(position);
-		
+
 		// Create's the dialog
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 		builder.setTitle("Deck Menu");
-		builder.setItems(
-				R.array.deck_long_click,
-				new DialogInterface.OnClickListener() {
+		builder.setItems(R.array.deck_long_click, new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						switch (which)
-						{
-						case 0:
-							Log.w(LOG,"You've hit edit!");
-							break;
-						case 1:
-							Log.w(LOG,"You've hit delete!");
-							db.open();
-							db.DeleteDeck(deck);
-							db.close();
-							updateList();
-							break;
-						case 2:
-							Log.w(LOG,"You've hit cancel!");
-							dialog.cancel();
-							break;
-							
-						}
-						Log.w(LOG, "which: " + which + " | " + "dialog: " + dialog.toString());
-					}
-				});
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which) {
+				case 0:
+					Log.w(LOG, "You've hit edit!");
+					break;
+				case 1:
+					Log.w(LOG, "You've hit delete!");
+					db.open();
+					db.DeleteDeck(deck);
+					db.close();
+					updateList();
+					break;
+				case 2:
+					Log.w(LOG, "You've hit cancel!");
+					dialog.cancel();
+					break;
+
+				}
+				Log.w(LOG, "which: " + which + " | " + "dialog: " + dialog.toString());
+			}
+		});
 		AlertDialog d = builder.create();
 		d.show();
-		
+
 		return false;
 	}
-	
+
 	private void updateList() {
 
 		db.open();
@@ -93,5 +96,5 @@ public class DeckListFragment extends SherlockFragment implements OnItemLongClic
 		}
 		db.close();
 	}
-	
+
 }

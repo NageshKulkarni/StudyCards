@@ -24,7 +24,7 @@ import com.inajstudios.studycards.adapters.DeckAdapter;
 import com.inajstudios.studycards.models.Deck;
 import com.inajstudios.studycards.sqlite.DeckDataSource;
 
-public class Main extends SherlockFragmentActivity implements OnItemLongClickListener
+public class Main extends SherlockFragmentActivity
 {
 	private static final String LOG = "MainActivity";
 	private DeckDataSource db;
@@ -41,17 +41,8 @@ public class Main extends SherlockFragmentActivity implements OnItemLongClickLis
 		List<Deck> decks = new ArrayList<Deck>();
 		
 		lvDecks = (ListView) findViewById(R.id.fragment_lvDecks);
-		
-		updateList();
 	}
-
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-		updateList();
-	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
 		// TODO Auto-generated method stub
@@ -67,20 +58,6 @@ public class Main extends SherlockFragmentActivity implements OnItemLongClickLis
 		inflater.inflate(R.menu.main_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 
-	}
-
-
-	private void updateList() {
-
-		db.open();
-		if (db.isEmpty()) {
-			Toast.makeText(this, "No Decks found!", Toast.LENGTH_LONG).show();
-		} else {
-			decks = db.getAllDecks();
-			lvDecks.setAdapter(new DeckAdapter(decks, this));
-			lvDecks.setOnItemLongClickListener(this);
-		}
-		db.close();
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -103,49 +80,6 @@ public class Main extends SherlockFragmentActivity implements OnItemLongClickLis
 			startActivity(new Intent(this, SwipeExample.class));
 			break;
 		}
-		return false;
-	}
-
-	@Override
-	public boolean onItemLongClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		// Find out which deck was long clicked
-		final Deck deck = (Deck) parent.getItemAtPosition(position);
-		
-		// Create's the dialog
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-		builder.setTitle("Deck Menu");
-		builder.setItems(
-				R.array.deck_long_click,
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						switch (which)
-						{
-						case 0:
-							Log.w(LOG,"You've hit edit!");
-							break;
-						case 1:
-							Log.w(LOG,"You've hit delete!");
-							db.open();
-							db.DeleteDeck(deck);
-							db.close();
-							updateList();
-							break;
-						case 2:
-							Log.w(LOG,"You've hit cancel!");
-							dialog.cancel();
-							break;
-							
-						}
-						Log.w(LOG, "which: " + which + " | " + "dialog: " + dialog.toString());
-					}
-				});
-		AlertDialog d = builder.create();
-		d.show();
-		
 		return false;
 	}
 }
