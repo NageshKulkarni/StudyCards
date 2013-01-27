@@ -11,6 +11,7 @@
         android:id="@+id/fragment_decklistview"
         android:name="com.inajstudios.studycards.fragments.DeckListFragment"
         android:layout_width="match_parent"
+        android:background="#CCCCCC"
         android:layout_height="match_parent" />
 
 </LinearLayout>

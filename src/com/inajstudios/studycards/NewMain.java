@@ -2,6 +2,8 @@ package com.inajstudios.studycards;
 
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,46 +19,29 @@ import com.inajstudios.studycards.fragments.DeckListFragment;
 import com.inajstudios.studycards.models.Deck;
 import com.inajstudios.studycards.sqlite.DeckDataSource;
 
-public class NewMain extends SherlockFragmentActivity implements DeckListFragment.OnItemSelectedListener {
+public class NewMain extends SherlockFragmentActivity implements DeckListFragment.OnDeckItemSelectedListener {
 
 	private static final String LOG = "NewMain";
 	
 	CardFlipFragment cardFlipFragment;
+	DeckListFragment deckListFragment;
 	ListView lvDecks;
 	DeckDataSource db;
 	List<Deck> decks;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_newmain);
+		
 		db = new DeckDataSource(this);
-		
-		
-//		db.open();
-//		decks = db.getAllDecks();
-//		db.close();
-		
-		lvDecks = (ListView) findViewById(R.id.fragment_lvDecks);
-		updateList();
-		
-//		lvDecks.setAdapter(new DeckAdapter(decks, this));
-//		String[] planets = new String[] { "Mercury", "Venus", "Earth", "Mars",  
-//                "Jupiter", "Saturn", "Uranus", "Neptune"};    
-//		lvDecks.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, planets));
 	}
 	
 	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-		updateList();
-	}
-
-	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
-		super.onStart();
-		updateList();
+		super.onResume();
 	}
 	
 	@Override
@@ -105,25 +90,6 @@ public class NewMain extends SherlockFragmentActivity implements DeckListFragmen
 	}
 
 	
-	/*** Controls ***/
-	
-	/*
-	 *  Update the listview whenever a CRUD operation happens
-	 */
-	private void updateList() {
-		Log.w(LOG, LOG + "updateList() called, list is refreshed!");
-		db.open();
-		if (db.isEmpty()) {
-			Toast.makeText(this, "No decks found, make one!", Toast.LENGTH_LONG).show();
-		} else {
-			decks = db.getAllDecks();
-			lvDecks.setAdapter(new DeckAdapter(decks, this));
-//			lv.setOnItemLongClickListener(this);
-		}
-		db.close();
-	}
-
-	
 	/*
 	 *  Implementing fragment listeners
 	 *  Need to override listeners on the fragment to support multiscreen functionality
@@ -131,10 +97,52 @@ public class NewMain extends SherlockFragmentActivity implements DeckListFragmen
 	@Override
 	public void onDeckItemSelected(Deck deck) {
 		Log.w(LOG, LOG + "DeckListItemSelected() called, someone touched an item in the list!");
+		
+		// Find the fragment view
+		deckListFragment = (DeckListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_decklistview);
 		cardFlipFragment = (CardFlipFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_cardviewflipper);
+		final Deck selectedDeck = deck;
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Deck Menu");
+		builder.setItems(
+				R.array.deck_long_click,
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						switch (which)
+						{
+						case 0:
+							Log.w(LOG,"You've hit edit!");
+							break;
+						case 1:
+							Log.w(LOG,"You've hit delete!");
+							db.open();
+							db.DeleteDeck(selectedDeck);
+							db.close();
+							break;
+						case 2:
+							Log.w(LOG,"You've hit cancel!");
+							dialog.cancel();
+							break;
+							
+						}
+						Log.w(LOG, "which: " + which + " | " + "dialog: " + dialog.toString());
+					}
+				});
+		AlertDialog d = builder.create();
+		d.show();
+		
+		deckListFragment.updateDB();
+		
+		// Is the other fragment in this activity?
 		if (cardFlipFragment != null && cardFlipFragment.isInLayout()) {
-			cardFlipFragment.setText("OHCRAPITWORKED");
-			Toast.makeText(this, "No decks found, make one!", Toast.LENGTH_LONG).show();
+
+			Toast.makeText(this, "CardFlipper found!", Toast.LENGTH_SHORT).show();
+		} else {
+
+			Toast.makeText(this, "No CardFlipper :(", Toast.LENGTH_SHORT).show();
 		}
 	}
 	

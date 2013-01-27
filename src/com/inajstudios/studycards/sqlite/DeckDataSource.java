@@ -25,12 +25,12 @@ public class DeckDataSource {
 	}
 
 	public void open() throws SQLException {
-		Log.w(LOG, LOG+ ": OPEN() called fine");
+		// Log.v(LOG, LOG+ ": OPEN() called fine");
 		db = dbHelper.getWritableDatabase();
 	}
 
 	public void close() throws SQLException {
-		Log.w(LOG, LOG+ ": CLOSE() ended fine");
+		// Log.v(LOG, LOG+ ": CLOSE() ended fine");
 		dbHelper.close();
 	}
 
@@ -74,15 +74,14 @@ public class DeckDataSource {
 	public List<Deck> getAllDecks() {
 		List<Deck> decks = new ArrayList<Deck>();
 
-		Cursor cursor = db.query(MySQLiteHelper.TABLE_DECKS, null, null, null,
-				null, null, null);
+		Cursor cursor = db.query(MySQLiteHelper.TABLE_DECKS, null, null, null, null, null, null);
 
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 			Deck deck = cursorToDeck(cursor);
 			decks.add(deck);
-			Log.v(LOG, cursor.getPosition() + " | " + deck.getTitle());
+			// Log.v(LOG, cursor.getPosition() + " | " + deck.getTitle());
 		}
-		
+
 		cursor.close();
 		return decks;
 	}
@@ -92,26 +91,22 @@ public class DeckDataSource {
 	 */
 	private Deck cursorToDeck(Cursor cursor) {
 		Deck deck = new Deck();
-				
+
 		deck.setDid(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.DECKS_COLUMN_DID)));
 		deck.setUid(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.DECKS_COLUMN_UID)));
 		deck.setTitle(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.DECKS_COLUMN_TITLE)));
 		deck.setDescription(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.DECKS_COLUMN_DESCRIPTION)));
 		deck.setCategory(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.DECKS_COLUMN_CATEGORY)));
 		deck.setIsPrivate(cursor.getInt(cursor.getColumnIndex(MySQLiteHelper.DECKS_COLUMN_ISPRIVATE)));
-		
+
 		return deck;
 	}
-	
-	public boolean isEmpty()
-	{
-		Cursor cursor = db.query(MySQLiteHelper.TABLE_DECKS, null, null, null,
-				null, null, null);
-		
-		if(cursor != null)
-		{
-			if (cursor.getCount() == 0)
-			{
+
+	public boolean isEmpty() {
+		Cursor cursor = db.query(MySQLiteHelper.TABLE_DECKS, null, null, null, null, null, null);
+
+		if (cursor != null) {
+			if (cursor.getCount() == 0) {
 				return true;
 			} else {
 				return false;
@@ -119,12 +114,11 @@ public class DeckDataSource {
 		}
 		return false;
 	}
-	
+
 	/*
 	 * Clears the DB
 	 */
-	public void clearDB()
-	{
+	public void clearDB() {
 		db.delete(MySQLiteHelper.TABLE_DECKS, null, null);
 	}
 }
