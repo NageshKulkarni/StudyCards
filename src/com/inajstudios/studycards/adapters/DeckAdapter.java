@@ -1,28 +1,32 @@
 package com.inajstudios.studycards.adapters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.inajstudios.studycards.R;
 import com.inajstudios.studycards.models.Deck;
 
-public class DeckAdapter extends BaseAdapter {
+public class DeckAdapter extends ArrayAdapter<Deck> {
+
 
 	private List<Deck> decks;
 	Context context;
 
-	public DeckAdapter(List<Deck> decks, Context c) {
-		this.decks = decks;
-		context = c;
-	}
 
+	public DeckAdapter(Context context, int d) {
+		super(context, d);
+		this.context = context;
+		this.decks = d;
+	}
+	
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return decks.size();
@@ -38,6 +42,7 @@ public class DeckAdapter extends BaseAdapter {
 		return position;
 	}
 
+	@Ovve
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		View v = convertView;
