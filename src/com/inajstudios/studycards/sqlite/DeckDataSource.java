@@ -25,10 +25,12 @@ public class DeckDataSource {
 	}
 
 	public void open() throws SQLException {
+		Log.w(LOG, LOG+ ": OPEN() called fine");
 		db = dbHelper.getWritableDatabase();
 	}
 
 	public void close() throws SQLException {
+		Log.w(LOG, LOG+ ": CLOSE() ended fine");
 		dbHelper.close();
 	}
 

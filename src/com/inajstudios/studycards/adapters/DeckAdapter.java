@@ -13,8 +13,6 @@ import android.widget.TextView;
 import com.inajstudios.studycards.R;
 import com.inajstudios.studycards.models.Deck;
 
-
-
 public class DeckAdapter extends BaseAdapter {
 
 	private List<Deck> decks;
@@ -44,8 +42,7 @@ public class DeckAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		View v = convertView;
 		if (v == null) {
-			LayoutInflater vi = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.adapter_deck, null);
 		}
 

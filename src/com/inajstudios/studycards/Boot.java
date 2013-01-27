@@ -1,13 +1,13 @@
 package com.inajstudios.studycards;
 
-import android.app.Activity;
+import com.actionbarsherlock.app.SherlockActivity;
+
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
-public class Boot extends Activity {
+public class Boot extends SherlockActivity {
 
 	private static final int TABLET_SIZE = 6;
 	private static final String LOG = "Boot";
@@ -18,7 +18,7 @@ public class Boot extends Activity {
 		super.onCreate(savedInstanceState);
 		isTablet();
 
-		startActivity(new Intent(this, MainActivity.class));
+		startActivity(new Intent(this, NewMain.class));
 	}
 
 	private boolean isTablet() {

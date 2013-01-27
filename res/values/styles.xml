@@ -18,7 +18,7 @@
     </style>
 
     <!-- Custom Application theme. -->
-    <style name="AppTheme2" parent="Sherlock.__Theme.Light">
+    <style name="AppTheme2" parent="Theme.Sherlock.Light.DarkActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     

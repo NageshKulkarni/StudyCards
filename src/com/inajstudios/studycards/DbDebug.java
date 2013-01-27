@@ -19,7 +19,8 @@ import com.inajstudios.studycards.adapters.DeckAdapter;
 import com.inajstudios.studycards.models.Deck;
 import com.inajstudios.studycards.sqlite.DeckDataSource;
 
-public class DbDebug extends SherlockActivity implements OnClickListener{
+public class DbDebug extends SherlockActivity implements OnClickListener
+{
 
 	private static final String LOG = "ViewDecks";
 	private DeckDataSource db;

@@ -7,6 +7,21 @@ public class Card {
 	private String front;
 	private String back;
 	
+	/*
+	 * All cards MUST have a DeckID, cheap way to enforce it
+	 */
+	public Card()
+	{
+		this.did = -1;
+		this.cid = -1;
+		this.front = "NO FRONT";
+		this.back = "NO BACK";
+	}
+	
+	public Card(int did)
+	{
+		this.did = did;
+	}
 	public int getCid() {
 		return cid;
 	}

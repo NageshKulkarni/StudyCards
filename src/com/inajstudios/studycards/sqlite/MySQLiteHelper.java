@@ -10,7 +10,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
 	// DB name to be stored in internal memory
 	private static final String DATABASE_NAME = "studycards.db";
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 5;
 
 	// Table for "DECKS"
 	public static final String TABLE_DECKS = "decks";

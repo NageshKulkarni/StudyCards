@@ -1,3 +1,9 @@
+/**
+ *  The home screen which is considered the root of all navigation.
+ *  
+ *  Here users are able to use CRUD on decks and prepare to add cards
+ */
+
 package com.inajstudios.studycards;
 
 import java.util.ArrayList;
@@ -71,16 +77,9 @@ public class MainActivity extends SherlockActivity implements OnItemLongClickLis
 
 	}
 
-	// private void updateList() {
-	// db.open();
-	//
-	// List<Deck> decks = new ArrayList<Deck>();
-	// decks = db.getAllDecks();
-	// lvDecks.setAdapter(new DeckAdapter(decks, this));
-	//
-	// db.close();
-	// }
-
+	/*
+	 *  Update the listview whenever a CRUD happens
+	 */
 	private void updateList() {
 		// Creating a new RelativeLayout
 		RelativeLayout relativeLayout = new RelativeLayout(this);
