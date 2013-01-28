@@ -6,6 +6,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
+	
+	// Singleton
+	
+	private static MySQLiteHelper instance;
+	
+	public static synchronized MySQLiteHelper getInstance(Context context)
+    {
+        if (instance == null)
+            instance = new MySQLiteHelper(context);
+
+        return instance;
+    }
+	
 	private static final String LOG = "DeckDataSource";
 
 	// DB name to be stored in internal memory
@@ -41,7 +54,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 			+ " INTEGER NOT NULL, " + CARDS_COLUMN_FRONT + " TEXT NOT NULL,"
 			+ CARDS_COLUMN_BACK + " TEXT NOT NULL);";
 
-	public MySQLiteHelper(Context context) {
+	private MySQLiteHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		// TODO Auto-generated constructor stub
 	}

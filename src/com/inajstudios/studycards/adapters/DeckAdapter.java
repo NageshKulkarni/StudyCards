@@ -16,35 +16,56 @@ import com.inajstudios.studycards.models.Deck;
 
 public class DeckAdapter extends ArrayAdapter<Deck> {
 
-
-	private List<Deck> decks;
 	Context context;
-
-
-	public DeckAdapter(Context context, int d) {
-		super(context, d);
-		this.context = context;
+	List<Deck> decks;
+	
+	public DeckAdapter(Context c, List<Deck> d) {
+		super(c, R.layout.adapter_deck, d);
+		
+		this.context = c;
 		this.decks = d;
 	}
 	
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return decks.size();
 	}
 
 	public Deck getItem(int position) {
-		// TODO Auto-generated method stub
 		return decks.get(position);
 	}
 
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return position;
 	}
 
-	@Ovve
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
+//	@Override
+//	public View getView(int position, View convertView, ViewGroup parent)
+//	{
+//		View v = convertView;
+//		if (v == null) {
+//			LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//			v = vi.inflate(R.layout.adapter_deck, null);
+//		}
+//
+//		ImageView image = (ImageView) v.findViewById(R.id.icon);
+//		TextView tvTitle = (TextView) v.findViewById(R.id.title);
+//		TextView tvDescription = (TextView) v.findViewById(R.id.description);
+//		TextView tvCategory = (TextView) v.findViewById(R.id.category);
+//		TextView tvIsPrivate = (TextView) v.findViewById(R.id.isprivate);
+//
+//		Deck deck = (Deck) decks.get(position);
+//		image.setImageResource(R.drawable.category_debug_icon);
+//		tvTitle.setText(deck.getTitle());
+//		tvDescription.setText("Description: " + deck.getDescription());
+//		tvCategory.setText(deck.getCategory());
+//		tvIsPrivate.setText("DID" + deck.getDid());
+//
+//		return v;
+//	}
+	
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent)
+	{
 		View v = convertView;
 		if (v == null) {
 			LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -62,8 +83,33 @@ public class DeckAdapter extends ArrayAdapter<Deck> {
 		tvTitle.setText(deck.getTitle());
 		tvDescription.setText("Description: " + deck.getDescription());
 		tvCategory.setText(deck.getCategory());
-		tvIsPrivate.setText("DID" + deck.getDid());
+		tvIsPrivate.setText("Deck ID: " + deck.getDid());
 
 		return v;
+	}
+	
+	public void setList(List<Deck> d)
+	{
+		this.decks = d;
+	}
+	
+	@Override
+	public void add(Deck deck) {
+		// TODO Auto-generated method stub
+		super.add(deck);
+		this.decks.add(deck);
+	}
+	
+//	@Override
+//	public void remove(Deck deck) {
+//		// TODO Auto-generated method stub
+//		super.remove(deck);
+//	}
+	
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		super.clear();
+		this.decks.clear();
 	}
 }

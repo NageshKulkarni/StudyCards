@@ -12,7 +12,8 @@ import android.util.Log;
 
 import com.inajstudios.studycards.models.Deck;
 
-public class DeckDataSource {
+public class DeckDataSource 
+{
 
 	private static final String LOG = "DeckDataSource";
 
@@ -21,7 +22,7 @@ public class DeckDataSource {
 	private MySQLiteHelper dbHelper;
 
 	public DeckDataSource(Context context) {
-		dbHelper = new MySQLiteHelper(context);
+		dbHelper = MySQLiteHelper.getInstance(context);
 	}
 
 	public void open() throws SQLException {
@@ -37,7 +38,7 @@ public class DeckDataSource {
 	/*
 	 * Creates a new deck and inserts it into the DB
 	 */
-	public void createDeck(Deck deck) {
+	public void addDeck(Deck deck) {
 		// Preparing data to insert
 		ContentValues cv = new ContentValues();
 		cv.put(MySQLiteHelper.DECKS_COLUMN_UID, deck.getUid());

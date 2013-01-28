@@ -20,7 +20,7 @@ public class CardDataSource {
 	private MySQLiteHelper dbHelper;
 
 	public CardDataSource(Context context) {
-		dbHelper = new MySQLiteHelper(context);
+		dbHelper = MySQLiteHelper.getInstance(context);
 	}
 
 	public void open() throws SQLException {

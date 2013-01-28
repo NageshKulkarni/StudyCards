@@ -79,7 +79,7 @@ public class NewDeck extends SherlockActivity implements OnClickListener {
 			deck.setDescription(etDescription.getText().toString());
 
 			db.open();
-			db.createDeck(deck);
+			db.addDeck(deck);
 			db.close();
 
 			finish();

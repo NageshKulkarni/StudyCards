@@ -19,22 +19,19 @@ import com.inajstudios.studycards.adapters.DeckAdapter;
 import com.inajstudios.studycards.models.Deck;
 import com.inajstudios.studycards.sqlite.DeckDataSource;
 
-public class DbDebug extends SherlockActivity implements OnClickListener
-{
-
+public class DbDebug extends SherlockActivity implements OnClickListener {
+	
 	private static final String LOG = "ViewDecks";
 	private DeckDataSource db;
 	Button bAdd, bDelete, bReset;
 	ListView lvDecks;
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		setContentView(R.layout.activity_viewdecks);
-		
+		setContentView(R.layout.activity_debug_dbdecks);
 
 		initializeUI();
 		db = new DeckDataSource(this);
@@ -44,26 +41,55 @@ public class DbDebug extends SherlockActivity implements OnClickListener
 	@Override
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
 		// TODO Auto-generated method stub
-		
-//		menu.add("New Deck").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-//		menu.add("Settings").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		menu.add("Add 1").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		menu.add("Add 10").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		menu.add("Add 100").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 
-	    int itemId = item.getItemId();
-	    switch (itemId) {
-	    case android.R.id.home:
-	        finish();
-	        break;
-	    }
-	    return true;
+		int itemId = item.getItemId();
+		Deck deck = new Deck();
+		String itemTitle = item.getTitle().toString();
+
+		switch (itemId) {
+		case android.R.id.home:
+			finish();
+			break;
+		}
+
+		if (itemTitle == "Add 1") {
+
+			Toast.makeText(this, "Selected: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+			db.open();
+			db.addDeck(deck);
+			db.close();
+		} else if (itemTitle == "Add 10") {
+
+			Toast.makeText(this, "Selected: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+			db.open();
+			for (int i = 0; i < 10; i++) {
+				db.addDeck(deck);
+			}
+			db.close();
+		} else if (itemTitle == "Add 100") {
+
+			Toast.makeText(this, "Selected: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+			db.open();
+			for (int i = 0; i < 100; i++) {
+				db.addDeck(deck);
+			}
+			db.close();
+		}
+
+		updateList();
+		return true;
 	}
-	
-	
+
 	private void initializeUI() {
 		bAdd = (Button) findViewById(R.id.viewdecks_bAdd);
 		bDelete = (Button) findViewById(R.id.viewdecks_bDelete);
@@ -73,7 +99,7 @@ public class DbDebug extends SherlockActivity implements OnClickListener
 		bAdd.setOnClickListener(this);
 		bDelete.setOnClickListener(this);
 		bReset.setOnClickListener(this);
-		//lvDecks.setOnItemClickListener(this);
+		// lvDecks.setOnItemClickListener(this);
 	}
 
 	private void updateList() {
@@ -81,8 +107,9 @@ public class DbDebug extends SherlockActivity implements OnClickListener
 
 		List<Deck> decks = new ArrayList<Deck>();
 		decks = db.getAllDecks();
-		lvDecks.setAdapter(new DeckAdapter(decks, this));
+		lvDecks.setAdapter(new DeckAdapter(this, decks));
 
+		
 		db.close();
 	}
 
@@ -96,7 +123,7 @@ public class DbDebug extends SherlockActivity implements OnClickListener
 			Deck deck = new Deck();
 
 			db.open();
-			db.createDeck(deck);
+			db.addDeck(deck);
 			db.close();
 			updateList();
 			break;
@@ -119,22 +146,22 @@ public class DbDebug extends SherlockActivity implements OnClickListener
 		}
 	}
 
-//	@Override
-//	public void onItemClick(AdapterView<?> parent, View view, int position,
-//			long id) {
-//		// TODO Auto-generated method stub
-//		Toast.makeText(getApplicationContext(),
-//				"Click ListItem Number " + position, Toast.LENGTH_SHORT).show();
-//		Deck d = (Deck) parent.getItemAtPosition(position);
-//		
-//		Intent intent = new Intent(this, ViewDeck.class);
-//		Bundle extras = new Bundle();
-//		extras.putSerializable("DECK", d);
-//		
-//		intent.putExtras(extras);
-//		startActivity(intent);
-//		
-//		Log.w(LOG, "GOT DECK "+d.getTitle());
-//	}
+	// @Override
+	// public void onItemClick(AdapterView<?> parent, View view, int position,
+	// long id) {
+	// // TODO Auto-generated method stub
+	// Toast.makeText(getApplicationContext(),
+	// "Click ListItem Number " + position, Toast.LENGTH_SHORT).show();
+	// Deck d = (Deck) parent.getItemAtPosition(position);
+	//
+	// Intent intent = new Intent(this, ViewDeck.class);
+	// Bundle extras = new Bundle();
+	// extras.putSerializable("DECK", d);
+	//
+	// intent.putExtras(extras);
+	// startActivity(intent);
+	//
+	// Log.w(LOG, "GOT DECK "+d.getTitle());
+	// }
 
 }

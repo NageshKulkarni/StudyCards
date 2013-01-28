@@ -13,8 +13,8 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.inajstudios.studycards.adapters.DeckAdapter;
 import com.inajstudios.studycards.fragments.CardFlipFragment;
+import com.inajstudios.studycards.fragments.CardFragment;
 import com.inajstudios.studycards.fragments.DeckListFragment;
 import com.inajstudios.studycards.models.Deck;
 import com.inajstudios.studycards.sqlite.DeckDataSource;
@@ -24,11 +24,12 @@ public class NewMain extends SherlockFragmentActivity implements DeckListFragmen
 	private static final String LOG = "NewMain";
 	
 	CardFlipFragment cardFlipFragment;
+	CardFragment cardFragment;
 	DeckListFragment deckListFragment;
 	ListView lvDecks;
-	DeckDataSource db;
 	List<Deck> decks;
-	
+
+	DeckDataSource db;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,29 +63,27 @@ public class NewMain extends SherlockFragmentActivity implements DeckListFragmen
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// If this callback does not handle the item click,
-		// onPerformDefaultAction
-		// of the ActionProvider is invoked. Hence, the provider encapsulates
-		// the
+		// If this callback does not handle the item click, onPerformDefaultAction
+		// of the ActionProvider is invoked. Hence, the provider encapsulates the
 		// complete functionality of the menu item.
 		Toast.makeText(this, item.getItemId() + " - " + item.getTitle().toString(), Toast.LENGTH_SHORT).show();
 		switch (item.getItemId()) {
-		case R.id.menu_newdeck:
-			startActivity(new Intent(this, NewDeck.class));
-
-			break;
-		case R.id.menu_dbdebug:
-
-			startActivity(new Intent(this, DbDebug.class));
-			break;
-		case R.id.menu_settings:
-
-			break;
-
-		case R.id.menu_swipe:
-
-			startActivity(new Intent(this, SwipeExample.class));
-			break;
+			case R.id.menu_newdeck:
+				startActivity(new Intent(this, NewDeck.class));
+	
+				break;
+			case R.id.menu_dbdebug:
+	
+				startActivity(new Intent(this, DbDebug.class));
+				break;
+			case R.id.menu_settings:
+	
+				break;
+	
+			case R.id.menu_swipe:
+	
+				startActivity(new Intent(this, SwipeExample.class));
+				break;
 		}
 		return false;
 	}
@@ -100,7 +99,8 @@ public class NewMain extends SherlockFragmentActivity implements DeckListFragmen
 		
 		// Find the fragment view
 		deckListFragment = (DeckListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_decklistview);
-		cardFlipFragment = (CardFlipFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_cardviewflipper);
+//		cardFlipFragment = (CardFlipFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_cardviewflipper);
+		cardFragment = (CardFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_card);
 		final Deck selectedDeck = deck;
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -144,6 +144,12 @@ public class NewMain extends SherlockFragmentActivity implements DeckListFragmen
 
 			Toast.makeText(this, "No CardFlipper :(", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	@Override
+	public void onDeckItemLongClick(Deck deck) {
+		// TODO Auto-generated method stub
+		Toast.makeText(this, "LONG CLICK DETECTED", Toast.LENGTH_LONG).show();
 	}
 	
 }

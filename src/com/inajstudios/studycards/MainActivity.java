@@ -47,10 +47,6 @@ public class MainActivity extends SherlockActivity implements OnItemLongClickLis
 		db = new DeckDataSource(this);
 		List<Deck> decks = new ArrayList<Deck>();
 		updateList();
-
-		/*
-		 * Need a nice listview of sorts
-		 */
 	}
 
 	@Override
@@ -117,7 +113,7 @@ public class MainActivity extends SherlockActivity implements OnItemLongClickLis
 			ListView lv = new ListView(this);
 			lv.setLayoutParams(lv_layoutParams);
 			decks = db.getAllDecks();
-			lv.setAdapter(new DeckAdapter(decks, this));
+			//lvDecks.setAdapter(new DeckAdapter(this, decks));
 			lv.setOnItemLongClickListener(this);
 
 			// Adding the TextView to the RelativeLayout as a child
