@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.internal.widget.IcsAdapterView;
-import com.actionbarsherlock.internal.widget.IcsAdapterView.OnItemLongClickListener;
 import com.inajstudios.studycards.R;
 import com.inajstudios.studycards.adapters.DeckAdapter;
 import com.inajstudios.studycards.models.Deck;
@@ -27,24 +24,23 @@ import com.inajstudios.studycards.sqlite.DeckDataSource;
 
 public class DeckListFragment extends SherlockFragment implements OnItemClickListener, OnItemLongClickListener {
 
-	
 	private static final String LOG = "DeckListFragment";
 	private OnDeckItemSelectedListener deckListener;
 	public ListView lvDecks;
 	public List<Deck> decks = new ArrayList<Deck>();
 	protected DeckDataSource db;
 
-	/*
+	/**********************************************************
 	 * Listener interface to be implemented by the activity
-	 */
+	 **********************************************************/
 	public interface OnDeckItemSelectedListener {
 		public void onDeckItemSelected(Deck deck); 
 		public void onDeckItemLongClick(Deck deck);
 	}
 	
-	/*
+	/**********************************************************
 	 *  Fragment Life-cycle call back methods 
-	 */
+	 **********************************************************/
 
 	// Check to see if the Activity has implemented the interface
 	@Override
@@ -79,21 +75,20 @@ public class DeckListFragment extends SherlockFragment implements OnItemClickLis
 
 		lvDecks = (ListView) view.findViewById(R.id.fragment_lvDecks);
 		
+		DeckAdapter myDeckAdapter = new DeckAdapter(getSherlockActivity(), decks);
+		lvDecks.setAdapter(myDeckAdapter);
+		lvDecks.setOnItemClickListener(this);
+		lvDecks.setOnItemLongClickListener(this);
+		
 		return view;
 	}
 
+	// bind listeners here?
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		Log.w(LOG, "onActivityCreated() CALLED!");
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		
-		//deckListener.updateDeckList();
-		updateDB();
-		
-		DeckAdapter myDeckAdapter = new DeckAdapter(getSherlockActivity(), decks);
-		lvDecks.setAdapter(myDeckAdapter);
-		lvDecks.setOnItemClickListener(this);
 	}
 
 	@Override
@@ -146,12 +141,6 @@ public class DeckListFragment extends SherlockFragment implements OnItemClickLis
 		super.onDetach();
 	}
 
-	
-	
-	
-	
-	
-
 	/*
 	 * To be implemented by the parent Activity
 	 */
@@ -160,17 +149,21 @@ public class DeckListFragment extends SherlockFragment implements OnItemClickLis
 		Toast.makeText(getSherlockActivity(), "A deck was clicked!", Toast.LENGTH_SHORT).show();
 		final Deck deck = (Deck) parent.getItemAtPosition(position);
 		deckListener.onDeckItemSelected(deck);
+		updateDB();
 	}
-
+	
 	@Override
-	public boolean onItemLongClick(IcsAdapterView<?> parent, View view, int position, long id) {
+	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 		Toast.makeText(getSherlockActivity(), "A deck was long held!", Toast.LENGTH_SHORT).show();
 		final Deck deck = (Deck) parent.getItemAtPosition(position);
 		deckListener.onDeckItemLongClick(deck);
+		updateDB();
 		return true;
 	}
-
-	/*** Public methods to be called from the outside ***/
+	
+	/*
+	 * Fragment specific methods
+	 */
 	public void updateDB() {
 		db.open();
 		decks = db.getAllDecks();
@@ -178,5 +171,6 @@ public class DeckListFragment extends SherlockFragment implements OnItemClickLis
 		lvDecks.setAdapter(myDeckAdapter);
 		db.close();
 	}
+
 
 }

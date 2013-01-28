@@ -13,13 +13,15 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="10dp" >
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Set Name:" />
+                android:textSize="16sp"
+                android:text="Set Name" />
 
             <EditText
                 android:id="@+id/newdeck_etTitle"
@@ -33,7 +35,8 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description (Max 140 characters)" />
+                android:textSize="16sp"
+                android:text="Description" />
 
             <EditText
                 android:id="@+id/newdeck_etDescription"
@@ -43,6 +46,7 @@
                 android:gravity="top|left"
                 android:lines="3"
                 android:maxLength="140"
+                style="@style/mystyle"
                 android:singleLine="false" >
             </EditText>
 
@@ -50,6 +54,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
                 android:text="Category" />
 
             <Spinner
@@ -72,15 +77,10 @@
 
             <Button
                 android:id="@+id/newdeck_bSave"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Save Deck Name and Continue" />
+                android:text="Save New Deck" />
 
-            <Button
-                android:id="@+id/newdeck_bMainMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Main Menu" />
         </LinearLayout>
     </ScrollView>
 

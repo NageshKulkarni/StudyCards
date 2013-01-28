@@ -16,10 +16,10 @@
         tools:layout="@layout/fragment_decklistview" />
 
     <fragment
-        android:id="@+id/fragment_card"
-        android:name="com.inajstudios.studycards.fragments.CardFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:id="@+id/fragment_cardpagerview"
+        android:name="com.inajstudios.studycards.fragments.CardPagerFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_weight="3" />
 
 </LinearLayout>

@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme2" >
         <activity
-            android:name=".Boot"
+            android:name="com.inajstudios.studycards.activities.Boot"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,27 +23,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.inajstudios.studycards.activities.ViewCards"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".ViewCards"
+            android:name="com.inajstudios.studycards.activities.DbDebug"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".DbDebug"
+            android:name="com.inajstudios.studycards.activities.NewDeck"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".NewDeck"
+            android:name="com.inajstudios.studycards.activities.NewMain"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".SwipeExample"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".NewMain"
+            android:name="com.inajstudios.studycards.activities.ViewCardsActivity"
             android:label="@string/app_name" >
         </activity>
     </application>

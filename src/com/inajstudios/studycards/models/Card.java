@@ -22,6 +22,15 @@ public class Card {
 	{
 		this.did = did;
 	}
+	
+	public Card (String f, String b)
+	{
+		this.did = -1;
+		this.cid = -1;
+		this.front = f;
+		this.back = b;
+	}
+	
 	public int getCid() {
 		return cid;
 	}

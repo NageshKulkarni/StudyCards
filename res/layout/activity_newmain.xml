@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    
-    
     <fragment
         android:id="@+id/fragment_decklistview"
         android:name="com.inajstudios.studycards.fragments.DeckListFragment"

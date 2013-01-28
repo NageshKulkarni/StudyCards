@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingRight="5dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
             android:id="@+id/icon"
             android:layout_width="60dp"
             android:layout_height="60dp"
-          android:paddingRight="5dp"
+            android:paddingRight="5dp"
             android:src="@drawable/category_debug_icon" />
 
         <LinearLayout
@@ -29,31 +30,31 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="TITLE HERE ! ! ! ! !"
-                android:textSize="12sp"
                 android:textColor="#003366"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="11sp"
-                android:text="DESCRIPTION HERE ! ! ! ! !" />
+                android:text="DESCRIPTION HERE ! ! ! ! !"
+                android:textSize="11sp" />
 
             <TextView
                 android:id="@+id/category"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="11sp"
-                android:text="CATEGORY HERE ! ! ! ! !" />
+                android:text="CATEGORY HERE ! ! ! ! !"
+                android:textSize="11sp" />
 
             <TextView
                 android:id="@+id/isprivate"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="9sp"
                 android:gravity="right"
-                android:text="DECKID HERE ! ! ! ! !" />
+                android:text="DECKID HERE ! ! ! ! !"
+                android:textSize="9sp" />
         </LinearLayout>
     </LinearLayout>
 
