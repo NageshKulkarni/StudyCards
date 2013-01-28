@@ -16,8 +16,10 @@ import com.tekle.oss.android.animation.AnimationFactory.FlipDirection;
 
 public class SingleCardFragment extends SherlockFragment implements OnClickListener {
 
+	String pagenumber;
 	private Card card;
 	private ViewAnimator va;
+	TextView tvPageNumber, tvFront, tvBack;
 
 	public SingleCardFragment() {
 	}
@@ -29,21 +31,24 @@ public class SingleCardFragment extends SherlockFragment implements OnClickListe
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		setRetainInstance(true);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_cardfragment, container, false);
-		TextView tvFront = (TextView) view.findViewById(R.id.front);
-		TextView tvBack = (TextView) view.findViewById(R.id.back);
-		tvFront.setText(card.getFront());
-		tvBack.setText(card.getBack());
+		tvPageNumber = (TextView) view.findViewById(R.id.pagenumbers);
+		if (card != null) {
+			tvFront = (TextView) view.findViewById(R.id.front);
+			tvBack = (TextView) view.findViewById(R.id.back);
+			tvPageNumber = (TextView) view.findViewById(R.id.pagenumbers);
+			tvFront.setText(card.getFront());
+			tvBack.setText(card.getBack());
+			tvPageNumber.setText(pagenumber);
+		}
 
 		va = (ViewAnimator) view.findViewById(R.id.viewanimator);
-		
+
 		va.setOnClickListener(this);
-		setRetainInstance(true);
 		return view;
 	}
 
@@ -51,5 +56,10 @@ public class SingleCardFragment extends SherlockFragment implements OnClickListe
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		AnimationFactory.flipTransition(va, FlipDirection.LEFT_RIGHT);
+	}
+	
+	public void setPageNumber(String s)
+	{
+		pagenumber = s;
 	}
 }

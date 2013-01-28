@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -80,24 +81,27 @@ public class NewMain extends SherlockFragmentActivity implements DeckListFragmen
 		// menu.add("Settings").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM
 		// | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
-		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.main_menu, menu);
+		menu.add(Menu.NONE, 0, 0, "New Deck").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add(Menu.NONE, 1, 1, "DeckDB").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add(Menu.NONE, 2, 2, "Settings").setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+//		MenuInflater inflater = getSupportMenuInflater();
+//		inflater.inflate(R.menu.main_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Toast.makeText(this, item.getItemId() + " - " + item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, item.getItemId() + " - " + item.getTitle().toString(), Toast.LENGTH_SHORT).show();
 		switch (item.getItemId()) {
-		case R.id.menu_newdeck:
+		case 0:
 			startActivity(new Intent(this, NewDeck.class));
 
 			break;
-		case R.id.menu_dbdebug:
+		case 1:
 
 			startActivity(new Intent(this, DbDebug.class));
 			break;
-		case R.id.menu_settings:
+		case 2:
 
 			break;
 		}

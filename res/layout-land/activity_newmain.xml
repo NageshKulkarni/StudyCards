@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/fragment_decklistview"
-        android:name="com.inajstudios.studycards.DeckListFragment"
+        android:name="com.inajstudios.studycards.fragments.DeckListFragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="7"

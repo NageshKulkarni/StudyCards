@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +24,7 @@ import com.inajstudios.studycards.models.Deck;
 import com.inajstudios.studycards.sqlite.DeckDataSource;
 
 public class DbDebug extends SherlockActivity implements OnClickListener {
-	
+
 	private static final String LOG = "ViewDecks";
 	private DeckDataSource db;
 	Button bAdd, bDelete, bReset;
@@ -33,7 +34,7 @@ public class DbDebug extends SherlockActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_debug_dbdecks);
-		
+
 		// Actionbar stuff
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -72,6 +73,7 @@ public class DbDebug extends SherlockActivity implements OnClickListener {
 			db.open();
 			db.addDeck(deck);
 			db.close();
+			updateList();
 		} else if (itemTitle == "Add 10") {
 
 			Toast.makeText(this, "Selected: " + item.getTitle(), Toast.LENGTH_SHORT).show();
@@ -80,17 +82,34 @@ public class DbDebug extends SherlockActivity implements OnClickListener {
 				db.addDeck(deck);
 			}
 			db.close();
+			updateList();
 		} else if (itemTitle == "Add 100") {
 
 			Toast.makeText(this, "Selected: " + item.getTitle(), Toast.LENGTH_SHORT).show();
-			db.open();
-			for (int i = 0; i < 100; i++) {
-				db.addDeck(deck);
-			}
-			db.close();
+			
+			AsyncTask<Void, Void, Void> insertalot = new AsyncTask<Void, Void, Void>()
+					{
+						@Override
+						protected Void doInBackground(Void... params) {
+
+							Deck deck = new Deck();
+							db.open();
+							for (int i = 0; i < 100; i++) {
+								db.addDeck(deck);
+							}
+							db.close();
+							return null;
+						}
+						@Override
+						protected void onPostExecute(Void result) {
+							// TODO Auto-generated method stub
+							super.onPostExecute(result);
+							updateList();
+						}
+					};
+					insertalot.execute((Void[]) null);
 		}
 
-		updateList();
 		return true;
 	}
 
@@ -113,7 +132,6 @@ public class DbDebug extends SherlockActivity implements OnClickListener {
 		decks = db.getAllDecks();
 		lvDecks.setAdapter(new DeckAdapter(this, decks));
 
-		
 		db.close();
 	}
 

@@ -34,7 +34,6 @@ public class CardPagerFragment extends SherlockFragment {
 		View view = inflater.inflate(R.layout.fragment_cardviewpager, container, false);
 		
 		vpCards = (ViewPager) view.findViewById(R.id.vpCards);
-		setRetainInstance(true);
 
 		return view;
 	}

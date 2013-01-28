@@ -30,7 +30,7 @@ public class CardFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
 	public Fragment getItem(int position) {
 		if (position < cards.size()) {
 			SingleCardFragment cf = new SingleCardFragment(cards.get(position));
-			cf.setRetainInstance(true);
+			cf.setPageNumber(position+1 + "/" + cards.size());
 			return cf;
 		} else {
 			return null;

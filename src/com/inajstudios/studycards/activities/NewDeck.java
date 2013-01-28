@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.inajstudios.studycards.R;
 import com.inajstudios.studycards.R.id;
 import com.inajstudios.studycards.R.layout;
@@ -24,8 +26,6 @@ import com.inajstudios.studycards.sqlite.DeckDataSource;
 
 public class NewDeck extends SherlockActivity implements OnClickListener {
 
-	
-	
 	private static final String LOG = "NewDeck";
 	private List<Category> categories;
 	EditText etTitle, etDescription;
@@ -42,10 +42,10 @@ public class NewDeck extends SherlockActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_createnewdeck);
 		initializeUI();
-//		loadCategories();
+		// loadCategories();
 		db = new DeckDataSource(this);
 		deck = new Deck();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private void initializeUI() {
@@ -58,17 +58,34 @@ public class NewDeck extends SherlockActivity implements OnClickListener {
 		bSave.setOnClickListener(this);
 		cbPrivate.setOnClickListener(this);
 	}
-	
-//	private void loadCategories()
-//	{
-//		categories = new ArrayList<Category>();
-//		for(int i = 0; i < CATEGORIES.length; i++)
-//		{
-//			categories.add(CATEGORIES[i]);
-//			Log.v(LOG, "category: " + categories.get(i).getTitle());
-//		}
-//		spCategory.setAdapter(new CategorySpinnerAdapter(categories, this));
-//	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			break;
+		}
+		return true;
+	}
+
+	// private void loadCategories()
+	// {
+	// categories = new ArrayList<Category>();
+	// for(int i = 0; i < CATEGORIES.length; i++)
+	// {
+	// categories.add(CATEGORIES[i]);
+	// Log.v(LOG, "category: " + categories.get(i).getTitle());
+	// }
+	// spCategory.setAdapter(new CategorySpinnerAdapter(categories, this));
+	// }
 
 	@Override
 	public void onClick(View v) {
@@ -84,7 +101,7 @@ public class NewDeck extends SherlockActivity implements OnClickListener {
 			db.close();
 
 			finish();
-//			startActivity(new Intent(this, ViewDecks.class));
+			// startActivity(new Intent(this, ViewDecks.class));
 			break;
 
 		case R.id.newdeck_cbPrivate:

@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.inajstudios.studycards.R;
 import com.inajstudios.studycards.adapters.CardFragmentStatePagerAdapter;
 import com.inajstudios.studycards.fragments.CardPagerFragment;
@@ -51,5 +53,20 @@ public class ViewCardsActivity extends SherlockFragmentActivity{
 		CardFragmentStatePagerAdapter cardAdapter = new CardFragmentStatePagerAdapter(getSupportFragmentManager(), cards);
 		cardPagerFragment.setAdapter(cardAdapter);
 	}
-	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			break;
+		}
+		return true;
+	}
 }

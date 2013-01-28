@@ -30,6 +30,9 @@ public class DeckListFragment extends SherlockFragment implements OnItemClickLis
 	public List<Deck> decks = new ArrayList<Deck>();
 	protected DeckDataSource db;
 
+	public DeckListFragment() {
+		// TODO Auto-generated constructor stub
+	}
 	/**********************************************************
 	 * Listener interface to be implemented by the activity
 	 **********************************************************/
