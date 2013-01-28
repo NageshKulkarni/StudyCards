@@ -18,25 +18,38 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.internal.widget.IcsAdapterView;
+import com.actionbarsherlock.internal.widget.IcsAdapterView.OnItemLongClickListener;
 import com.inajstudios.studycards.R;
 import com.inajstudios.studycards.adapters.DeckAdapter;
 import com.inajstudios.studycards.models.Deck;
 import com.inajstudios.studycards.sqlite.DeckDataSource;
 
-public class DeckListFragment extends SherlockFragment implements OnItemClickListener {
+public class DeckListFragment extends SherlockFragment implements OnItemClickListener, OnItemLongClickListener {
 
+	
 	private static final String LOG = "DeckListFragment";
+	private OnDeckItemSelectedListener deckListener;
 	public ListView lvDecks;
 	public List<Deck> decks = new ArrayList<Deck>();
-	private OnDeckItemSelectedListener deckListener;
-	
 	protected DeckDataSource db;
 
-	/*** Fragment Life-cycle call back methods ***/
+	/*
+	 * Listener interface to be implemented by the activity
+	 */
+	public interface OnDeckItemSelectedListener {
+		public void onDeckItemSelected(Deck deck); 
+		public void onDeckItemLongClick(Deck deck);
+	}
+	
+	/*
+	 *  Fragment Life-cycle call back methods 
+	 */
 
-	// Fragment gets attached to the activity
+	// Check to see if the Activity has implemented the interface
 	@Override
 	public void onAttach(Activity activity) {
+		Log.w(LOG, "onAttach() CALLED!");
 		super.onAttach(activity);
 	
 		// Need to ensure the Activity implements the Interface
@@ -46,7 +59,6 @@ public class DeckListFragment extends SherlockFragment implements OnItemClickLis
 		} else {
 			throw new ClassCastException(activity.toString() + " must implemenet MyListFragment.OnItemSelectedListener");
 		}
-		Log.w(LOG, "onAttach() CALLED!");
 	}
 
 	@Override
@@ -54,15 +66,19 @@ public class DeckListFragment extends SherlockFragment implements OnItemClickLis
 		Log.w(LOG, "onCreate() CALLED!");
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
-		db = new DeckDataSource(getSherlockActivity());
 	}
 
+	// Initialize the DB and bind views
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		Log.w(LOG, "onCreateView() CALLED!");
+		
+		db = new DeckDataSource(getSherlockActivity());
+		
 		View view = inflater.inflate(R.layout.fragment_decklistview, container, false);
 
+		lvDecks = (ListView) view.findViewById(R.id.fragment_lvDecks);
+		
 		return view;
 	}
 
@@ -71,6 +87,13 @@ public class DeckListFragment extends SherlockFragment implements OnItemClickLis
 		Log.w(LOG, "onActivityCreated() CALLED!");
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		
+		//deckListener.updateDeckList();
+		updateDB();
+		
+		DeckAdapter myDeckAdapter = new DeckAdapter(getSherlockActivity(), decks);
+		lvDecks.setAdapter(myDeckAdapter);
+		lvDecks.setOnItemClickListener(this);
 	}
 
 	@Override
@@ -79,20 +102,13 @@ public class DeckListFragment extends SherlockFragment implements OnItemClickLis
 		// TODO Auto-generated method stub
 		super.onStart();
 	}
-
-	/*** QUICK HACK FOR MYSQLITE NULLPOINTEREXCEPTIONS? FIX THIS! ***/
+	
+	// Whenever we revisit this fragment, refresh the ListView
 	@Override
 	public void onResume() {
 		Log.w(LOG, "onResume() CALLED!");
 		super.onResume();
-
-
-		//updateDB();
-		
-		lvDecks = (ListView) getSherlockActivity().findViewById(R.id.fragment_lvDecks);
-		DeckAdapter myDeckAdapter = new DeckAdapter(getSherlockActivity(), decks);
-		lvDecks.setAdapter(myDeckAdapter);
-		lvDecks.setOnItemClickListener(this);
+		updateDB();
 	}
 
 	@Override
@@ -130,29 +146,28 @@ public class DeckListFragment extends SherlockFragment implements OnItemClickLis
 		super.onDetach();
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+	
+	
+	
+	
+	
 
-	/************************************************************************************************************/
-	
-	
-	
-	
-	/*** Interfacing UI controls ***/
-	public interface OnDeckItemSelectedListener {
-		public void onDeckItemSelected(Deck deck); 
-		public void onDeckItemLongClick(Deck deck);
-	}
-
-	/*** Action Handlers! ***/
+	/*
+	 * To be implemented by the parent Activity
+	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Toast.makeText(getSherlockActivity(), "A deck was clicked!", Toast.LENGTH_SHORT).show();
 		final Deck deck = (Deck) parent.getItemAtPosition(position);
 		deckListener.onDeckItemSelected(deck);
+	}
+
+	@Override
+	public boolean onItemLongClick(IcsAdapterView<?> parent, View view, int position, long id) {
+		Toast.makeText(getSherlockActivity(), "A deck was long held!", Toast.LENGTH_SHORT).show();
+		final Deck deck = (Deck) parent.getItemAtPosition(position);
+		deckListener.onDeckItemLongClick(deck);
+		return true;
 	}
 
 	/*** Public methods to be called from the outside ***/
@@ -163,4 +178,5 @@ public class DeckListFragment extends SherlockFragment implements OnItemClickLis
 		lvDecks.setAdapter(myDeckAdapter);
 		db.close();
 	}
+
 }

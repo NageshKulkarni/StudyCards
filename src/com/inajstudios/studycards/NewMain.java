@@ -1,11 +1,14 @@
 package com.inajstudios.studycards;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.inajstudios.studycards.adapters.DeckAdapter;
 import com.inajstudios.studycards.fragments.CardFlipFragment;
 import com.inajstudios.studycards.fragments.CardFragment;
 import com.inajstudios.studycards.fragments.DeckListFragment;
@@ -23,8 +27,13 @@ public class NewMain extends SherlockFragmentActivity implements DeckListFragmen
 
 	private static final String LOG = "NewMain";
 	
+//	FragmentManager fm = getFragmentManager();
+//	FragmentTransaction = fm
+	
 	CardFlipFragment cardFlipFragment;
 	CardFragment cardFragment;
+	
+	// The ListView fragment for displaying all decks in the DB
 	DeckListFragment deckListFragment;
 	ListView lvDecks;
 	List<Deck> decks;
@@ -150,6 +159,17 @@ public class NewMain extends SherlockFragmentActivity implements DeckListFragmen
 	public void onDeckItemLongClick(Deck deck) {
 		// TODO Auto-generated method stub
 		Toast.makeText(this, "LONG CLICK DETECTED", Toast.LENGTH_LONG).show();
+	}
+
+	@Override
+	public void updateDeckList() {
+		// TODO Auto-generated method stub
+		List<Deck> mDecks = new ArrayList<Deck>();
+		db.open();
+		mDecks = db.getAllDecks();
+		db.close();
+		ListView lvDecks = (ListView) deckListFragment.getView().findViewById(R.id.fragment_lvDecks);
+		lvDecks.setAdapter(new DeckAdapter(this, mDecks));
 	}
 	
 }
