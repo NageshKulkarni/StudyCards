@@ -35,11 +35,10 @@ public class ViewCardsActivity extends SherlockFragmentActivity{
 
 		// Debug values
 		cards = new ArrayList<Card>();
-		cards.add(new Card("What are activities?", "IDK DONT FIRE ME PLZ"));
-		cards.add(new Card("What is the Android Manifest?", "Activities, Intent Filters, App Version"));
+		cards.add(new Card("DEBUG STATEMENT TEST1", "DEBUG STATEMENT TEST2"));
+		cards.add(new Card("What is the Android Manifest?", "Activities, Services, Broadcast Receivers, Content Providers"));
 		cards.add(new Card("What are the four layout densities?", "hdpi mdpi ldpi xhdpi"));
-		cards.add(new Card("Do you stink?", "Only on Thursdays"));
-		cards.add(new Card("U GON' GET IT", "oh god no not again"));
+		cards.add(new Card("WWWWWWWWWWWWWWLONGSTRINGWWWWWWWWWWWW", "a"));
 
 	}
 	
